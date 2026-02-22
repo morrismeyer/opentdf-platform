@@ -188,6 +188,47 @@ go test -bench=. -benchmem
 - Sub-microsecond latency for all operations
 - Full round-trip under 1us for most message types
 
+### Fory vs Protobuf Comparison
+
+Run comparison benchmarks:
+
+```bash
+cd lib/fory
+go test -bench='Fory|Protobuf' -benchmem
+```
+
+#### Serialization (ns/op, lower is better)
+
+| Message Type | Fory | Protobuf | Winner |
+|--------------|-----:|---------:|--------|
+| EntityChain | 195 | 201 | **Fory (3%)** |
+| Token | 74 | 90 | **Fory (18%)** |
+| DecisionResponse | 190 | 144 | **Protobuf (32%)** |
+
+#### Deserialization (ns/op, lower is better)
+
+| Message Type | Fory | Protobuf | Winner |
+|--------------|-----:|---------:|--------|
+| EntityChain | 440 | 282 | **Protobuf (56%)** |
+| Token | 203 | 81 | **Protobuf (151%)** |
+| DecisionResponse | 408 | 218 | **Protobuf (87%)** |
+
+#### Memory Efficiency (bytes/op, lower is better)
+
+| Operation | Fory | Protobuf | Winner |
+|-----------|-----:|---------:|--------|
+| EntityChain Serialize | 0 B | 80 B | **Fory** |
+| Token Serialize | 0 B | 512 B | **Fory** |
+| DecisionResponse Serialize | 0 B | 112 B | **Fory** |
+| EntityChain Deserialize | 448 B | 320 B | **Protobuf** |
+| Token Deserialize | 80 B | 0 B | **Protobuf** |
+| DecisionResponse Deserialize | 384 B | 360 B | **Protobuf** |
+
+**Key findings:**
+- **Fory wins on serialize** - Zero allocations due to buffer pooling
+- **Protobuf wins on deserialize** - Go Protobuf is highly optimized for decode
+- **Use case determines winner** - Fory better for high-write workloads, Protobuf for high-read
+
 ---
 
 ## Fory Configuration
