@@ -4,6 +4,7 @@ use (
 	./examples
 	./lib/fixtures
 	./lib/flattening
+	./lib/fory
 	./lib/identifier
 	./lib/ocrypto
 	./protocol/go
