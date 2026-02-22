@@ -12,16 +12,16 @@ const (
 // Action represents an action an entity can take.
 type Action struct {
 	// ID is the generated uuid in database.
-	ID string `fury:"id"`
+	ID string `fory:"id"`
 
 	// StandardAction is the standard action type.
-	StandardAction StandardAction `fury:"standardAction"`
+	StandardAction StandardAction `fory:"standardAction"`
 
 	// CustomAction is the custom action name.
-	CustomAction string `fury:"customAction"`
+	CustomAction string `fory:"customAction"`
 
 	// Name is the action name.
-	Name string `fury:"name"`
+	Name string `fory:"name"`
 }
 
 // Decision enumeration for authorization decisions.
@@ -36,40 +36,40 @@ const (
 // Resource is a logical bucket of attributes belonging to a "Resource".
 type Resource struct {
 	// ResourceAttributesID is the unique identifier for this resource's attributes.
-	ResourceAttributesID string `fury:"resourceAttributesId"`
+	ResourceAttributesID string `fory:"resourceAttributesId"`
 
 	// AttributeValueFqns is the list of attribute value FQNs associated with this resource.
-	AttributeValueFqns []string `fury:"attributeValueFqns"`
+	AttributeValueFqns []string `fory:"attributeValueFqns"`
 }
 
 // DecisionRequest is the request for authorization decisions.
 type DecisionRequest struct {
 	// Actions is the list of actions to evaluate.
-	Actions []*Action `fury:"actions"`
+	Actions []*Action `fory:"actions"`
 
 	// EntityChains is the list of entity chains to evaluate.
-	EntityChains []*EntityChain `fury:"entityChains"`
+	EntityChains []*EntityChain `fory:"entityChains"`
 
 	// ResourceAttributes is the list of resource attributes to evaluate against.
-	ResourceAttributes []*Resource `fury:"resourceAttributes"`
+	ResourceAttributes []*Resource `fory:"resourceAttributes"`
 }
 
 // DecisionResponse contains authorization decision result.
 type DecisionResponse struct {
 	// EntityChainID is the ephemeral entity chain id from the request.
-	EntityChainID string `fury:"entityChainId"`
+	EntityChainID string `fory:"entityChainId"`
 
 	// ResourceAttributesID is the ephemeral resource attributes id from the request.
-	ResourceAttributesID string `fury:"resourceAttributesId"`
+	ResourceAttributesID string `fory:"resourceAttributesId"`
 
 	// Action is the action of the decision response.
-	Action *Action `fury:"action"`
+	Action *Action `fory:"action"`
 
 	// Decision is the authorization decision.
-	Decision Decision `fury:"decision"`
+	Decision Decision `fory:"decision"`
 
 	// Obligations is the optional list of obligations represented in URI format.
-	Obligations []string `fury:"obligations"`
+	Obligations []string `fory:"obligations"`
 }
 
 // IsPermit returns true if the decision is PERMIT.
@@ -85,14 +85,14 @@ func (d *DecisionResponse) IsDeny() bool {
 // EntitlementsResponse contains entity entitlements.
 type EntitlementsResponse struct {
 	// Entitlements is the list of entity entitlements.
-	Entitlements []*EntityEntitlements `fury:"entitlements"`
+	Entitlements []*EntityEntitlements `fory:"entitlements"`
 }
 
 // EntityEntitlements contains entitlements for a single entity.
 type EntityEntitlements struct {
 	// EntityID is the entity identifier.
-	EntityID string `fury:"entityId"`
+	EntityID string `fory:"entityId"`
 
 	// AttributeValueFqns is the list of attribute value FQNs the entity is entitled to.
-	AttributeValueFqns []string `fury:"attributeValueFqns"`
+	AttributeValueFqns []string `fory:"attributeValueFqns"`
 }

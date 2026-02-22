@@ -227,6 +227,7 @@ func AuthGetDecision(handle C.uint64_t,
 	entityData := C.GoBytes(unsafe.Pointer(entityPtr), entityLen)
 	var entityChain dto.EntityChain
 	if err := svc.codec.Deserialize(entityData, &entityChain); err != nil {
+		println("DEBUG: Failed to deserialize EntityChain:", err.Error())
 		return C.OPENTDF_ERR_SERIALIZATION
 	}
 
@@ -234,6 +235,7 @@ func AuthGetDecision(handle C.uint64_t,
 	resourceData := C.GoBytes(unsafe.Pointer(resourcePtr), resourceLen)
 	var resource dto.Resource
 	if err := svc.codec.Deserialize(resourceData, &resource); err != nil {
+		println("DEBUG: Failed to deserialize Resource:", err.Error())
 		return C.OPENTDF_ERR_SERIALIZATION
 	}
 

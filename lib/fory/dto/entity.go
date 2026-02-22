@@ -23,35 +23,35 @@ const (
 // Entity represents a Person Entity (PE) or Non-Person Entity (NPE).
 type Entity struct {
 	// EphemeralID is for tracking between request and response.
-	EphemeralID string `fury:"ephemeralId"`
+	EphemeralID string `fory:"ephemeralId"`
 
 	// EntityType is the type of entity.
-	EntityType EntityType `fury:"entityType"`
+	EntityType EntityType `fory:"entityType"`
 
 	// EntityValue is the entity identifier value (email, username, client_id, etc.).
-	EntityValue string `fury:"entityValue"`
+	EntityValue string `fory:"entityValue"`
 
 	// Claims is the claims data as JSON string (when EntityType is Claims).
-	Claims string `fury:"claims"`
+	Claims string `fory:"claims"`
 
 	// Category is the entity category.
-	Category Category `fury:"category"`
+	Category Category `fory:"category"`
 }
 
 // EntityChain is a set of related Person Entities (PE) and Non-Person Entities (NPE).
 type EntityChain struct {
 	// EphemeralID is for tracking between request and response.
-	EphemeralID string `fury:"ephemeralId"`
+	EphemeralID string `fory:"ephemeralId"`
 
 	// Entities is the list of entities in this chain.
-	Entities []*Entity `fury:"entities"`
+	Entities []*Entity `fory:"entities"`
 }
 
 // Token represents an authentication/authorization token.
 type Token struct {
 	// EphemeralID is for tracking between request and response.
-	EphemeralID string `fury:"ephemeralId"`
+	EphemeralID string `fory:"ephemeralId"`
 
 	// JWT is the JWT token.
-	JWT string `fury:"jwt"`
+	JWT string `fory:"jwt"`
 }
