@@ -42,7 +42,7 @@ The `cmd/opentdf-service` implements a Go service designed to run as PID 1 in a 
 │  Container contents:           Security:                                    │
 │  /opentdf-client   (5.7 MB)    • No network stack                           │
 │  /opentdf-service  (3.5 MB)    • No shell                                   │
-│  /opentdf.sock     (runtime)   • No libc (musl static)                      │
+│  /opentdf.sock     (runtime)   • No glibc (musl static)                     │
 │                                • UDS namespace-isolated                     │
 │  Total: ~9.2 MB                • Separate process memory spaces             │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -96,6 +96,11 @@ go build -buildmode=c-archive -o libopentdf.a .
 
 ---
 
+> **Note:** The recommended production architecture is the two-process UDS model. The CGO library exports below are for environments where in-process linking is acceptable.
+
+<details>
+<summary>CGO Shared Library API (alternative integration path)</summary>
+
 ## Exported Functions (CGO Library)
 
 ### Platform Lifecycle
@@ -132,6 +137,8 @@ go build -buildmode=c-archive -o libopentdf.a .
 | Function | Signature | Description |
 |----------|-----------|-------------|
 | `EntityResolve` | `(handle, req, reqLen, resp, respLen) int` | Resolve entity |
+
+</details>
 
 ---
 
