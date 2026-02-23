@@ -13,15 +13,30 @@ type ForyCodec struct {
 	fory *fory.Fory
 }
 
-// NewForyCodec creates a new ForyCodec with all OpenTDF types registered.
+// NewForyCodec creates a new ForyCodec with cross-language support enabled.
+// Uses ref tracking for compatibility with Java XLANG mode.
 func NewForyCodec() *ForyCodec {
+	return NewForyCodecWithOptions(true)
+}
+
+// NewForyCodecWithOptions creates a ForyCodec with configurable ref tracking.
+// Set refTracking=false for better performance when DTOs have no circular references.
+// Must match Java ForyCodec configuration for interop.
+func NewForyCodecWithOptions(refTracking bool) *ForyCodec {
 	f := fory.NewFory(
-		fory.WithRefTracking(true),  // Enable reference tracking for schema compatibility
-		fory.WithXlang(true),        // Enable cross-language support
-		fory.WithCompatible(true),   // Enable schema compatibility mode
+		fory.WithRefTracking(refTracking),
+		fory.WithXlang(true),
+		fory.WithCompatible(true),
 	)
 	registerTypes(f)
 	return &ForyCodec{fory: f}
+}
+
+// NewOptimizedForyCodec creates a ForyCodec optimized for DTOs without circular references.
+// Per BUBBLE-OPTIMIZATION-TECHNIQUES.md Section 0: "Eliminate work entirely"
+// Disabling ref tracking removes 15% overhead from deserialization.
+func NewOptimizedForyCodec() *ForyCodec {
+	return NewForyCodecWithOptions(false)
 }
 
 // Serialize converts an object to a byte array.
