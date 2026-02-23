@@ -3,7 +3,7 @@ module github.com/opentdf/platform/lib/fory
 go 1.26.0
 
 require (
-	github.com/apache/fory/go/fory v0.0.0
+	github.com/apache/fory/go/fory v0.0.0-20260223170655-e812dfef93f4
 	github.com/opentdf/platform/protocol/go v0.16.0
 	github.com/stretchr/testify v1.9.0
 	google.golang.org/protobuf v1.36.9
@@ -24,5 +24,3 @@ require (
 	google.golang.org/grpc v1.67.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/apache/fory/go/fory => /home/actions/surfworks/apache-fory/go/fory
